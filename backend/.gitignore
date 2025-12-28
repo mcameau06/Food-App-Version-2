@@ -1,2 +1,3 @@
 myenv/
 app/.env
+app/database/database.db
