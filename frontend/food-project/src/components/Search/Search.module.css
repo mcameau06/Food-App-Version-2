@@ -1,0 +1,33 @@
+.searchContainer{
+    border-radius: 10px;
+    background-color: var(--brown);
+    width: fit-content;
+    color: var(--beige);
+    display: flex;
+    padding: 0.5rem;
+    flex-direction: column;
+}
+.searchContainer:hover{
+    box-shadow: 0 5px 15px var(--light-brown);
+}
+
+.foodForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    padding: .5rem;
+}
+button{
+    background-color: var(--orange);
+    border-radius: 5px;
+    border-color: var(--orange);
+    color:var(--beige);
+}
+input{
+    border-radius: 4px;
+    border-color: var(--orange);
+}
+input:focus{
+    outline: none;
+}

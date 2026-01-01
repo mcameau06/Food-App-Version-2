@@ -1,0 +1,8 @@
+.mainHeader{
+    background-color: var(--brown);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:var(--beige);
+    font-size: large;
+}
