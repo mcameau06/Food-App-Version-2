@@ -5,7 +5,15 @@ import Card from './Card/Card'
 
 function Results({foodResults}){
 
-
+    if ( foodResults.length === 0){
+        return (
+            <>
+            <div className={styles.noResultsContainer}>
+                <h1>No Results Found</h1>
+            </div>
+            </>
+        )
+    }
 
     return (
         <>
