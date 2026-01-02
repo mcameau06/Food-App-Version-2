@@ -19,7 +19,7 @@ function Search({onSearch}){
             <h2>What food are you feeling today?</h2>
             <form className={styles.foodForm} onSubmit={handleSubmit}>
             <button type="submit">Search</button>
-                <input type="text" id="query" value={query} onChange={handleInput}/>
+                <input type="text" id="query" value={query} onChange={handleInput} placeholder="ex:pizza"/>
                 {console.log(query)}
             </form>
         </div>
