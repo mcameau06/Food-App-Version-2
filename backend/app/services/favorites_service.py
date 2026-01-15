@@ -59,7 +59,7 @@ def add_save(favorite:Favorite,db:Session) -> Restaurant:
         get_or_create_user(favorite.user_id,db)
 
         restaurant = get_or_create_restaurant(favorite,db)
-        add_or_update_save(favorite,restaurant,db)
+        add_or_update_save(db,favorite.user_id,restaurant.id,favorite,restaurant)
         db.commit()
         return restaurant
 

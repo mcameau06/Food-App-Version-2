@@ -9,7 +9,7 @@ router = APIRouter(prefix="/api/v1/favorite",tags=["favorite"])
 
 
 @router.post("/")
-def add_favorites(favorite:Favorite,db:Session = Depends(get_db)):
+def add_save(favorite:Favorite,db:Session = Depends(get_db)):
 
     try:
         restaurant = add_save(favorite,db)
