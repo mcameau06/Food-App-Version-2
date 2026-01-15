@@ -1,11 +1,10 @@
-from sqlalchemy import create_engine, text,MetaData, Table,Integer,String,Column,ForeignKey,DateTime,Float
-from sqlalchemy.orm import Session, DeclarativeBase, mapped_column,relationship,Mapped,sessionmaker
-from typing import List,Optional
+from sqlalchemy import create_engine,String,ForeignKey,DateTime
+from sqlalchemy.orm import DeclarativeBase, mapped_column,relationship,Mapped,sessionmaker
+from typing import List
 from sqlalchemy.sql import func
 import os
 import datetime 
-from config import Config 
-from sqlalchemy.pool import NullPool
+
 db_dir  = os.path.dirname(os.path.abspath(__file__))
 sql_file_name = "database.db"
 sql_url = f'sqlite:///{os.path.join(db_dir,sql_file_name)}'
@@ -16,7 +15,6 @@ session = sessionmaker(bind=engine,autoflush=False)
 
 class Base(DeclarativeBase):
     pass
-
 
 class Swipe(Base):
     __tablename__ = "swipes"

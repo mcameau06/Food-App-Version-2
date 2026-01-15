@@ -1,8 +1,7 @@
 
 
-class ValidTypes:
 
-    FOOD_TYPES = [
+FOOD_TYPES = [
     "acai_shop","afghani_restaurant","african_restaurant","american_restaurant","asian_restaurant", "bagel_shop",
     "bakery","bar","bar_and_grill","barbecue_restaurant","brazilian_restaurant","breakfast_restaurant","brunch_restaurant",
     "buffet_restaurant","cafe","cafeteria","candy_store","cat_cafe","chinese_restaurant","chocolate_factory","chocolate_shop",

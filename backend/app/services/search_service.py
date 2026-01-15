@@ -1,9 +1,8 @@
 import requests
-from fastapi.responses import RedirectResponse
-from config import Config 
-from utils.keywords import ValidTypes
+from app.core.config import GOOGLE_API_KEY 
+from app.utils.keywords import FOOD_TYPES
 
-api_key = Config.GOOGLE_API_KEY
+api_key = GOOGLE_API_KEY
 
 
 # new places api
@@ -41,6 +40,14 @@ def search_by_text_places(query: str, lat: float, lng: float):
         print("Error", e)
         return {'error': f'Failed to fetch results: {str(e)}'}
 
+
+
+
+
+
+
+
+
 # legacy places api
 def search_by_text_places1(query:str, lat:float, lng:float):
     url= f"https://maps.googleapis.com/maps/api/place/textsearch/json"
@@ -62,7 +69,7 @@ def search_by_text_places1(query:str, lat:float, lng:float):
         return{'error':f'Failed to fetch results, {response.status_code}'}
 
 def format_search_places_response1(raw_json):
-    keywords = set(ValidTypes.FOOD_TYPES)
+    keywords = set(FOOD_TYPES)
     formatted = []
     
     for place in raw_json.get("results", []):
@@ -100,7 +107,7 @@ def format_search_places_response1(raw_json):
 
 
 def format_search_places_response(raw_json):
-    keywords = set(ValidTypes.FOOD_TYPES)
+    keywords = set(FOOD_TYPES)
     formatted = []
     
     # New API returns "places" not "results"
@@ -132,12 +139,6 @@ def format_search_places_response(raw_json):
             })
     
     return formatted
-
-
-
-
-
-
 
 
 def get_photo_url(photo_name, max_width=400):

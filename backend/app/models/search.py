@@ -1,5 +1,7 @@
+
 from pydantic import BaseModel
-from typing import List,Literal
+from typing import List
+
 
 class SearchResponse(BaseModel):
     name:str
@@ -12,12 +14,3 @@ class SearchResponse(BaseModel):
     open_now:bool | None=None
     photo_urls: List[str] = []
     types: List[str] = []
- 
-class Favorite(BaseModel):
-    place_id:str
-    place_name:str
-    lat:float
-    lng:float
-    user_id:str
-    swipe_direction: Literal["left","right"]
-
