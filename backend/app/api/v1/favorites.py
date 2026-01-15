@@ -13,7 +13,7 @@ def add_save(favorite:Favorite,db:Session = Depends(get_db)):
 
     try:
         restaurant = add_save(favorite,db)
-        return {f"Added {restaurant.name} to favorites",restaurant}
+        return {f"Added {restaurant.name} to favorites":restaurant}
     except SQLAlchemyError as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database error {e}")

@@ -16,7 +16,7 @@ def get_or_create_user(user_id:str,db:Session) -> User:
         db.flush()
     return db_user
 
-def get_or_create_restaurant(favorite_restaurant:Restaurant,db:Session) -> Swipe| None:
+def get_or_create_restaurant(favorite_restaurant:Restaurant,db:Session) -> Restaurant:
     stmt_2 = select(Restaurant).where(Restaurant.google_place_id == favorite_restaurant.place_id)
     db_restaurant = db.execute(stmt_2).scalars().first()
     if not db_restaurant:
