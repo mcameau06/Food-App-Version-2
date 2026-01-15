@@ -3,7 +3,7 @@ from fastapi import HTTPException,Depends
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from app.dependencies import get_db
-from app.services.favorites_service import add_save, get_favorites
+from app.services.favorites_service import add_save, get_user_favorites
 from app.models.favorite import Favorite
 router = APIRouter(prefix="/api/v1/favorite",tags=["favorite"])
 
@@ -24,7 +24,7 @@ def add_favorites(favorite:Favorite,db:Session = Depends(get_db)):
 @router.get("/{user_id}")
 def get_favorites(user_id:str,db:Session = Depends(get_db)):
     try:
-        restaurants = get_favorites(user_id,db)
+        restaurants = get_user_favorites(user_id,db)
 
         return {"favorites":restaurants}
     except SQLAlchemyError as e:

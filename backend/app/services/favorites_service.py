@@ -58,15 +58,10 @@ def add_save(favorite:Favorite,db:Session) -> Restaurant:
     try:
         get_or_create_user(favorite.user_id,db)
 
-        restaurant = get_or_create_restaurant(
-            favorite.place_id,
-            favorite.place_name,
-            favorite.lat,
-            favorite.lng,
-            db
-        )
+        restaurant = get_or_create_restaurant(favorite,db)
+        add_or_update_save(favorite,restaurant,db)
         db.commit()
-        return add_or_update_save(favorite,restaurant,db)
+        return restaurant
 
     except SQLAlchemyError as e:
         db.rollback()
@@ -75,7 +70,7 @@ def add_save(favorite:Favorite,db:Session) -> Restaurant:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Unexpected error {e}")
 
-def get_favorites(user_id:str, db:Session) -> List[dict]:
+def get_user_favorites(user_id:str, db:Session) -> List[dict]:
     stmt = select(Swipe).where(Swipe.user_id == user_id, Swipe.swipe_direction == "right")
     all_favorites = db.execute(stmt).scalars().all()
         

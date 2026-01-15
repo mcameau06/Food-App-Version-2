@@ -5,17 +5,12 @@ from sqlalchemy.exc import SQLAlchemyError
 from app.database.schemas import session
 from app.dependencies import get_db
 from app.services.restaurant_service import find_restaurant
-def get_db():
-    db = session()
-    try: 
-        yield db
-    finally:
-        db.close()
+
 
 router  = APIRouter(prefix= "/api/v1/restaurant", tags=["restaurant"])
 
 
-router.get("{place_id}")
+@router.get("{place_id}")
 def get_restaurant(place_id:str,db:Session = Depends(get_db)):
     try:
         
