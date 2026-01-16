@@ -9,7 +9,7 @@ router = APIRouter(prefix="/api/v1/favorite",tags=["favorite"])
 
 
 @router.post("/")
-def add_save(favorite:Favorite,db:Session = Depends(get_db)):
+def save_restaurant(favorite:Favorite,db:Session = Depends(get_db)):
 
     try:
         restaurant = add_save(favorite,db)
@@ -22,7 +22,7 @@ def add_save(favorite:Favorite,db:Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=f"Unexpected error {e}")
 
 @router.get("/{user_id}")
-def get_favorites(user_id:str,db:Session = Depends(get_db)):
+def get_favorited_restaurants(user_id:str,db:Session = Depends(get_db)):
     try:
         restaurants = get_user_favorites(user_id,db)
 

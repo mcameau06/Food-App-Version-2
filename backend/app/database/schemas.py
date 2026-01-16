@@ -4,7 +4,7 @@ from typing import List
 from sqlalchemy.sql import func
 import os
 import datetime 
-
+from app.core.config import SUPABASE_DB_URL
 db_dir  = os.path.dirname(os.path.abspath(__file__))
 sql_file_name = "database.db"
 sql_url = f'sqlite:///{os.path.join(db_dir,sql_file_name)}'
