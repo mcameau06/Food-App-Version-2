@@ -9,4 +9,7 @@ GOOGLE_API_KEY = os.environ["GOOGLE_API_KEY"]
 
 SUPABASE_DB_URL:str = os.environ["SUPABASE_DB_URL"]
 
+SUPABASE_JWT_SECRET = os.environ["SUPABASE_JWT_SECRET"]
+
+
    

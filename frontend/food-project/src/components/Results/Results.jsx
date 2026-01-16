@@ -1,30 +1,29 @@
-
 import styles from './Results.module.css';
 import Card from './Card/Card'
 
-
 function Results({foodResults}){
-
-    if ( foodResults.length === 0){
+    if (!foodResults || foodResults.length === 0){
         return (
-            <>
-            <div className={styles.noResultsContainer}>
-                <h1>No Results Found</h1>
-            </div>
-            </>
+            <main className={styles.mainContainer}>
+                <div className={styles.noResultsContainer}>
+                    <h1>No Results Found</h1>
+                    <p>Try searching for something else!</p>
+                </div>
+            </main>
         )
     }
 
     return (
-        <>
-        <div className={styles.resultsContainer}>
-        {foodResults.map((result,index)=>(
-            
-            <Card key={result.place_id} place={result}/>
-        ))}
-        </div>
-        
-        </>
+        <main className={styles.mainContainer}>
+            <div className={styles.resultsHeader}>
+                <h2>Found {foodResults.length} {foodResults.length === 1 ? 'place' : 'places'}</h2>
+            </div>
+            <div className={styles.resultsContainer}>
+                {foodResults.map((result) => (
+                    <Card key={result.place_id} place={result} />
+                ))}
+            </div>
+        </main>
     )
 }
 

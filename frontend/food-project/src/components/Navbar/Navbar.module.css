@@ -1,8 +1,38 @@
 .mainHeader{
     background-color: var(--brown);
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    color:var(--beige);
-    font-size: large;
+    padding: 1rem 2rem;
+    color: var(--beige);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--beige);
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.navLink {
+    color: var(--beige);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.navLink:hover {
+    background-color: rgba(253, 251, 212, 0.1);
+    color: var(--orange);
+    transform: translateY(-2px);
 }
