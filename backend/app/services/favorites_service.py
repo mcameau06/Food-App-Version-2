@@ -3,8 +3,9 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException
 from typing import List
-from app.database.schemas import Restaurant,User,Swipe
-from app.models.favorite import Favorite
+from app.database.schemas import Restaurant,User,Favorite 
+from app.models.favorite import Favorite as FavoriteModel
+
 
 
 def get_or_create_user(user_id:str,db:Session) -> User:
@@ -31,29 +32,28 @@ def get_or_create_restaurant(favorite_restaurant:Restaurant,db:Session) -> Resta
 
     return db_restaurant
 
-def get_existing_save(db:Session,user_id:str, restaurant_id:int) -> Restaurant:
-    stmt = select(Swipe).where(Swipe.user_id == user_id, Swipe.restaurant_id == restaurant_id)
+def get_existing_save(db:Session,user_id:str, restaurant_id:int) -> Restaurant | None:
+    stmt = select(Favorite).where(Favorite.user_id == user_id, Favorite.restaurant_id == restaurant_id)
 
     return db.execute(stmt).scalars().first()
 
 
-def add_or_update_save(db:Session,user_id:str, restaurant_id:int,favorite:Favorite,restaurant:Restaurant) -> Restaurant:
+def add_or_update_save(db:Session,user_id:str, restaurant_id:int,favorite:FavoriteModel,restaurant:Restaurant) -> Restaurant:
     
     existing_save = get_existing_save(db,user_id,restaurant_id)
 
     if existing_save:
-        existing_save.swipe_direction = favorite.swipe_direction
-        
-        
+        db.flush()
+        return restaurant
     else:
-        db.add(Swipe(
+        db.add(Favorite(
                 user_id = favorite.user_id,
                 restaurant_id = restaurant.id,
-                swipe_direction = favorite.swipe_direction,
             ))
         db.flush()
         return restaurant
-def add_save(favorite:Favorite,db:Session) -> Restaurant:
+
+def add_save(favorite:Favorite,db:Session) -> FavoriteModel:
 
     try:
         get_or_create_user(favorite.user_id,db)
@@ -66,19 +66,39 @@ def add_save(favorite:Favorite,db:Session) -> Restaurant:
     except SQLAlchemyError as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database error {e}")
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Unexpected error {e}")
 
+def remove_favorite(user_id:str, restaurant_id:str,db:Session) -> None:
+    try:
+        get_or_create_user(user_id,db)
+
+        stmt = select(Restaurant).where(Restaurant.restaurant_id == restaurant_id)
+        restaurant = db.execute(stmt).scalars().first()
+        if not restaurant:
+            raise HTTPException(status_code=404, detail="Restaurant not found")
+
+        favorite_to_delete = get_existing_save(db,user_id,restaurant_id)
+
+        db.delete(favorite_to_delete)
+        db.commit()
+
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database error {e}")
+    
 def get_user_favorites(user_id:str, db:Session) -> List[dict]:
-    stmt = select(Swipe).where(Swipe.user_id == user_id, Swipe.swipe_direction == "right")
-    all_favorites = db.execute(stmt).scalars().all()
+    try:
+        stmt = select(Favorite).where(Favorite.user_id == user_id)
+        all_favorites = db.execute(stmt).scalars().all()
         
-    restaurants = [ {"restaurant_id":right_swipe.restaurant_obj.id,
-                        "google_place_id":right_swipe.restaurant_obj.google_place_id,
-                        "name":right_swipe.restaurant_obj.name,
-                        "lat":right_swipe.restaurant_obj.latitude,
-                        "lng":right_swipe.restaurant_obj.longitude,
-                        "swiped_at":right_swipe.swiped_at.isoformat()
-                        } for right_swipe in all_favorites]
-    return {"favorites":restaurants}
+        restaurants = [ {"restaurant_id":favorite.restaurant_obj.id,
+                        "google_place_id":favorite.restaurant_obj.google_place_id,
+                        "name":favorite.restaurant_obj.name,
+                        "lat":favorite.restaurant_obj.latitude,
+                        "lng":favorite.restaurant_obj.longitude,
+                        "created_at":favorite.created_at.isoformat()
+                        } for favorite in all_favorites]
+        return {"favorites":restaurants}
+
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database error {e}")

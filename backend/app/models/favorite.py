@@ -9,4 +9,4 @@ class Favorite(BaseModel):
     lat:float
     lng:float
     user_id:str
-    swipe_direction: Literal["left","right"]
+    
