@@ -1,64 +1,49 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
-import './App.css'
-import Navbar from './components/Navbar/Navbar'
-import Home from './components/Home/Home'
-import LoginPage from './components/LoginPage/LoginPage'
-import useGeolocation from './hooks/useGeolocation'
-import Results from './components/Results/Results'
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import LandingPage from './pages/LandingPage/LandingPage';
+import ExplorePage from './pages/ExplorePage/ExplorePage';
+import FavoritesPage from './pages/FavoritesPage/FavoritesPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import './App.css';
 
-function AppContent() {
-  const navigate = useNavigate()
-  const {lat, lng, error, loading} = useGeolocation()
-  const [results, setResults] = useState(null)
-  
-  async function handleSearch(query){
-    try {
-      const result = await searchFood(query, lat, lng)
-      setResults(result)
-      navigate('/results')
-    }
-    catch(err){
-      console.log(err)
-    }
-  }
-  
-  async function searchFood(query, lat, lng){
-    const API_BASE_URL = 'http://127.0.0.1:8000'
-    let url = `${API_BASE_URL}/api/v1/search?query=${encodeURIComponent(query)}&lat=${lat}&lng=${lng}`
-  
-    try {
-      const response = await fetch(url)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      return data
-    }
-    catch(error){
-      console.error(error)
-      return []
-    }
-  }
-
+// Layout component that includes the Navbar
+function Layout() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home searchFunction={handleSearch} />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/results" element={<Results foodResults={results} />} />
-      </Routes>
+      <Outlet />
     </>
-  )
+  );
 }
+
+// Create router with all routes
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <LandingPage />,
+      },
+      {
+        path: 'explore',
+        element: <ExplorePage />,
+      },
+      {
+        path: 'favorites',
+        element: <FavoritesPage />,
+      },
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+    ],
+  },
+]);
 
 function App() {
-  return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
-  )
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

@@ -1,0 +1,252 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginCard {
+  background-color: var(--light-brown);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 8px 24px rgba(66, 39, 1, 0.2);
+  text-align: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--beige);
+  margin: 0 0 1rem 0;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--beige);
+  opacity: 0.9;
+  margin: 0 0 2rem 0;
+}
+
+.form {
+  text-align: left;
+  margin: 2rem 0;
+}
+
+.errorBanner {
+  display: block;
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.field {
+  margin-bottom: 1.25rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--beige);
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 2px solid rgba(214, 181, 136, 0.3);
+  background-color: rgba(214, 181, 136, 0.1);
+  color: var(--beige);
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.input::placeholder {
+  color: var(--beige);
+  opacity: 0.5;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--orange);
+}
+
+.input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.inputError {
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+.fieldError {
+  display: block;
+  font-size: 0.875rem;
+  color: #fca5a5;
+  margin-top: 0.375rem;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  background-color: var(--orange);
+  color: var(--beige);
+  border: none;
+  border-radius: 12px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: var(--brown);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(36, 95, 115, 0.3);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.buttonSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(214, 181, 136, 0.3);
+  border-top-color: var(--beige);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.switchText {
+  font-size: 1rem;
+  color: var(--beige);
+  opacity: 0.9;
+  margin: 1.5rem 0 0;
+}
+
+.switchLink {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.switchLink:hover:not(:disabled) {
+  color: var(--beige);
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: var(--beige);
+}
+
+.loadingState p {
+  margin: 1rem 0 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(214, 181, 136, 0.2);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.info {
+  background-color: rgba(214, 181, 136, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.info p {
+  font-weight: 600;
+  color: var(--beige);
+  margin: 0 0 1rem 0;
+}
+
+.info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info li {
+  color: var(--beige);
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.info li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.exploreLink {
+  display: inline-block;
+  color: var(--beige);
+  opacity: 0.85;
+  text-decoration: none;
+  font-size: 0.9375rem;
+  margin-top: 1.5rem;
+  transition: opacity 0.2s ease;
+}
+
+.exploreLink:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .loginCard {
+    padding: 2rem 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}

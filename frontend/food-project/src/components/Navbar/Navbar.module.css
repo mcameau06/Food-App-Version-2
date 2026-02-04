@@ -1,38 +1,205 @@
-.mainHeader{
-    background-color: var(--brown);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    color: var(--beige);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.mainHeader {
+  background-color: var(--brown);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: var(--beige);
+  box-shadow: 0 4px 12px rgba(66, 39, 1, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
 }
 
 .logo {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--beige);
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--beige);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  letter-spacing: -0.02em;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 .nav {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.desktopNav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 .navLink {
-    color: var(--beige);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+  color: var(--beige);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .navLink:hover {
-    background-color: rgba(253, 251, 212, 0.1);
-    color: var(--orange);
-    transform: translateY(-2px);
+  background-color: rgba(214, 181, 136, 0.15);
+  color: var(--beige);
+  transform: translateY(-2px);
+}
+
+.navLink.active {
+  background-color: var(--orange);
+  color: var(--beige);
+}
+
+.navLink.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--beige);
+  transition: width 0.3s ease;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  color: var(--beige);
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.navButton:hover {
+  background-color: rgba(214, 181, 136, 0.15);
+  color: var(--beige);
+  transform: translateY(-2px);
+}
+
+.mobileNavButton {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--beige);
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.mobileNavButton:hover {
+  background-color: rgba(214, 181, 136, 0.15);
+  color: var(--beige);
+}
+
+.mobileMenuBtn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 24px;
+}
+
+.hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--beige);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger span.open:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger span.open:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger span.open:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.mobileNav {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--brown);
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 12px rgba(66, 39, 1, 0.3);
+  gap: 0.5rem;
+}
+
+.mobileNavLink {
+  color: var(--beige);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.mobileNavLink:hover {
+  background-color: rgba(214, 181, 136, 0.15);
+  color: var(--beige);
+}
+
+.mobileNavLink.active {
+  background-color: var(--orange);
+  color: var(--beige);
+}
+
+@media (max-width: 768px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .mobileMenuBtn {
+    display: flex;
+  }
+
+  .mobileNav {
+    display: flex;
+  }
+
+  .mainHeader {
+    padding: 1rem 1.5rem;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
 }

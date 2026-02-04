@@ -67,20 +67,24 @@ def add_save(favorite:Favorite,db:Session) -> FavoriteModel:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database error {e}")
 
-def remove_favorite(user_id:str, restaurant_id:str,db:Session) -> None:
+def remove_favorite(user_id: str, place_id: str, db: Session) -> None:
     try:
-        get_or_create_user(user_id,db)
+        get_or_create_user(user_id, db)
 
-        stmt = select(Restaurant).where(Restaurant.restaurant_id == restaurant_id)
+        stmt = select(Restaurant).where(Restaurant.google_place_id == place_id)
         restaurant = db.execute(stmt).scalars().first()
         if not restaurant:
             raise HTTPException(status_code=404, detail="Restaurant not found")
 
-        favorite_to_delete = get_existing_save(db,user_id,restaurant_id)
+        favorite_to_delete = get_existing_save(db, user_id, restaurant.id)
+        if not favorite_to_delete:
+            raise HTTPException(status_code=404, detail="Favorite not found")
 
         db.delete(favorite_to_delete)
         db.commit()
 
+    except HTTPException:
+        raise
     except SQLAlchemyError as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database error {e}")
